@@ -1,0 +1,49 @@
+openapi: 3.0.0
+info:
+  title: api-management-ENVIRONMENT
+  description: ENVIRONMENT Management API Gateway
+  version: 1.0.0
+
+servers:
+  - url: https://TENANT_GW
+
+x-google-endpoints:
+  - name: https://TENANT_GW
+    allowCors: True
+
+components:
+  securitySchemes:
+    api_key_contentful:
+      type: "apiKey"
+      name: "x-api-key"
+      in: "header"
+
+security:
+  - api_key_contentful: []
+
+tags:
+  - name: Content Service
+
+paths:
+  /cms/v1/content-published:
+    options:
+      tags:
+        - Content Service
+      operationId: contentPublishedOptions
+      security: []
+      responses:
+        200:
+          description: OK
+      x-google-backend:
+        address: https://core-config-service-ENVIRONMENT-BASE_HASH-wl.a.run.app/paven/v1/options/handler
+    post:
+      tags:
+        - Content Service
+      summary: Handle Content Publish
+      operationId: ContentPublished
+      responses:
+        204:
+          description: OK
+      x-google-backend:
+        address: https://content-service-ENVIRONMENT-BASE_HASH-wl.a.run.app
+        path_translation: APPEND_PATH_TO_ADDRESS
